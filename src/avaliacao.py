@@ -39,3 +39,16 @@ def erros_por_ano(semanas_avaliadas, coluna_previsao):
     linhas.append({"ano": "total", "MAE": total["MAE"], "RMSE": total["RMSE"]})
 
     return pd.DataFrame(linhas)
+
+
+def erro_proporcional(real, previsto):
+    # Quanto o real ficou acima ou abaixo do previsto, em escala log (0 = acertou; +0,46 ≈ 58% acima)
+    # clip(lower=0): previsão negativa não existe em casos, então vira 0 antes do log
+    return np.log1p(real) - np.log1p(previsto.clip(lower=0))
+
+
+def aplicar_faixa(previsto, quantil_baixo, quantil_alto):
+    # Transforma a previsão numa faixa, usando os quantis do erro proporcional do backtest
+    # A faixa cresce junto com a previsão: estreita em semana calma, larga em surto
+    base = np.log1p(np.clip(previsto, 0, None))
+    return np.expm1(base + quantil_baixo), np.expm1(base + quantil_alto)

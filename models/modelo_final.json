@@ -29,5 +29,10 @@
     "MAE_baseline": 26.614987080103358,
     "RMSE_baseline": 60.29603969665649
   },
+  "faixa_80": {
+    "quantil_10_log": -0.618361144827716,
+    "quantil_90_log": 0.4559318574503409,
+    "cobertura_janela_movel": 0.7984496124031008
+  },
   "versao_scikit_learn": "1.9.1"
 }
