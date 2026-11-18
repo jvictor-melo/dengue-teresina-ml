@@ -16,15 +16,17 @@ Registro do porquê de cada escolha do projeto e do que eu conferi nos dados ant
 
 ## Clima
 
-**Fonte principal: estação automática A312 do INMET** (aeroporto de Teresina). É medição real e oficial, de hora em hora, com chuva, temperatura e umidade.
+**Plano inicial: estação automática A312 do INMET** (aeroporto de Teresina). É medição real e oficial, de hora em hora, com chuva, temperatura e umidade.
 
-**Buracos da A312: preenchidos com o ERA5.** Medi a cobertura ano a ano antes de decidir. A estação ficou parada de julho de 2024 a janeiro de 2026 (cerca de 18 meses) e em boa parte de 2020, e em 2022, o ano do surto, faltam 66% das horas de janeiro e 51% de fevereiro. Preencher isso com média seria inventar clima justamente no fim da série, onde fica o teste do modelo. Onde a A312 não mediu, vou usar o ERA5, marcando a origem de cada valor.
+**Os buracos da A312 eram grandes demais para média.** Medi a cobertura ano a ano: a estação ficou parada de julho de 2024 a janeiro de 2026 (cerca de 18 meses) e em boa parte de 2020, e em 2022, o ano do surto, faltam 66% das horas de janeiro e 51% de fevereiro. Preencher isso com média seria inventar clima justamente no fim da série, onde fica o teste do modelo. Por isso entrou o ERA5, e o plano passou a ser usar a A312 onde ela mediu e o ERA5 nos buracos.
 
-**ERA5 puro, e não o padrão do Open-Meteo.** O padrão (`best_match`) troca de modelo no meio da série. Como o ERA5 é o estepe e também a régua de comparação com a A312, ele precisa medir do mesmo jeito em 2015 e em 2026. O custo é a resolução: a grade de ~25 km suaviza a chuva de pancada (a maior chuva numa hora foi 68,6 mm na A312 e 31,7 mm no ERA5).
+**Decisão final: ERA5 no período todo; a A312 fica só para conferência.** Antes de emendar, comparei as duas nas 451 semanas em que a A312 mediu as 168 horas. Temperatura e umidade batem bem: correlação de 0,92 a 0,95, com o ERA5 só um pouco acima (+0,6 °C na média, +2 pontos de umidade). A temperatura mínima é a mais fraca (correlação 0,60, ERA5 +1,0 °C). A chuva bate na média geral, mas a relação muda de ano para ano: o ERA5 choveu 85% a mais que a estação em 2015, quase igual em 2017–2018 e 32% a menos em 2022. Emendar as duas criaria degraus de clima que seriam só troca de instrumento, e não existe um fator único para corrigir a chuva (calcular um usando semanas que vão cair no teste ainda seria vazamento de informação). Com uma régua só de 2015 a 2026, uma mudança no clima do modelo é mudança no clima. A A312 continua na tabela, com sufixo `_a312`, para a análise exploratória.
+
+**ERA5 puro, e não o padrão do Open-Meteo.** O padrão (`best_match`) troca de modelo no meio da série, e o motivo de usar o ERA5 é justamente ter o mesmo instrumento em 2015 e em 2026. O custo é a resolução: a grade de ~25 km suaviza a chuva de pancada (a maior chuva numa hora foi 68,6 mm na A312 e 31,7 mm no ERA5).
 
 **Só três variáveis.** Chuva, temperatura e umidade: as ligadas ao ciclo do mosquito e as que existem nas duas fontes.
 
-**Agregação semanal.** Por semana epidemiológica, de domingo a sábado no horário de Teresina (os dados vêm em UTC). Chuva é somada; temperatura vira média, mínima e máxima; umidade vira média. Cada semana guarda quantas horas foram medidas, porque uma soma de chuva com metade das horas faltando parece uma semana seca.
+**Agregação semanal.** Por semana epidemiológica, de domingo a sábado no horário de Teresina (os dados vêm em UTC). Chuva é somada; temperatura vira média, mínima e máxima; umidade vira média. As duas fontes passam pela mesma função. Cada semana guarda quantas horas foram medidas, porque uma soma de chuva com metade das horas faltando parece uma semana seca.
 
 ## Dados brutos
 
@@ -34,7 +36,7 @@ Registro do porquê de cada escolha do projeto e do que eu conferi nos dados ant
 
 ## Conferências nos dados
 
-**A chuva de 2015 parecia baixa demais.** A A312 deu 535,6 mm no ano, contra uma média histórica de cerca de 1.356 mm. Conferi com os boletins do próprio INMET: abril/2015 tem 225,0 mm no boletim e 222,4 mm no meu cálculo, e novembro/2015 tem 0,0 mm nos dois. O arquivo é fiel ao registro oficial, e 2015 foi mesmo seco (El Niño). Mas o ERA5 deu 992 mm no mesmo ano, quase toda a diferença em janeiro a março. Isso vai ser comparado ano a ano na análise exploratória.
+**A chuva de 2015 parecia baixa demais.** A A312 deu 535,6 mm no ano, contra uma média histórica de cerca de 1.356 mm. Conferi com os boletins do próprio INMET: abril/2015 tem 225,0 mm no boletim e 222,4 mm no meu cálculo, e novembro/2015 tem 0,0 mm nos dois. O arquivo é fiel ao registro oficial, e 2015 foi mesmo seco (El Niño). Mas o ERA5 deu 992 mm no mesmo ano, quase toda a diferença em janeiro a março. Na comparação semana a semana, 2015 e 2016 são justamente os anos em que a A312 fica mais abaixo do ERA5. Não dá para saber, só com esses dados, qual das duas está certa nesses anos; pode ter sido o pluviômetro medindo a menos.
 
 **O INMET mudou o formato em 2019.** Até 2018 a data vem como `2015-01-01` e a hora como `00:00`; a partir de 2019, `2019/01/01` e `0000 UTC`, com outro nome de coluna. A leitura padroniza os dois formatos e confere, em todos os anos, que as colunas lidas pela posição são mesmo chuva, temperatura e umidade.
 
