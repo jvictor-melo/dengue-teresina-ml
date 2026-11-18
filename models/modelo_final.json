@@ -1,0 +1,33 @@
+{
+  "modelo": "LinearRegression (scikit-learn)",
+  "alvo": "casos_est da semana seguinte",
+  "features": [
+    "casos_lag1",
+    "casos_lag2",
+    "casos_lag3",
+    "casos_lag4",
+    "semana_seno",
+    "semana_cosseno"
+  ],
+  "intercepto": 7.966709917137635,
+  "pesos": {
+    "casos_lag1": 1.2372726698479874,
+    "casos_lag2": -0.3549151882329361,
+    "casos_lag3": 0.11210700854680555,
+    "casos_lag4": -0.059511000347626714,
+    "semana_seno": 13.02477839520277,
+    "semana_cosseno": 4.0091602395798285
+  },
+  "treino": {
+    "primeira_semana": "2015-02-01",
+    "ultima_semana": "2026-05-24",
+    "semanas": 591
+  },
+  "avaliacao_janela_movel_2019_2026": {
+    "MAE_modelo": 25.695011087806755,
+    "RMSE_modelo": 58.2287029509765,
+    "MAE_baseline": 26.614987080103358,
+    "RMSE_baseline": 60.29603969665649
+  },
+  "versao_scikit_learn": "1.9.1"
+}
