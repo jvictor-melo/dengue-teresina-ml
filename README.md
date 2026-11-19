@@ -1,12 +1,25 @@
 # Previsão de dengue em Teresina
 
-Modelo para prever os casos semanais de dengue em Teresina (PI), usando dados públicos do InfoDengue, do INMET e do ERA5. Feito em Python, com pandas e Jupyter.
+Modelo que prevê os casos de dengue da semana seguinte em Teresina (PI), com dados públicos do InfoDengue e clima do ERA5, e um dashboard em Streamlit com a previsão e a avaliação do modelo.
 
-**Projeto em andamento.** A coleta e a limpeza dos casos estão prontas; agora estou juntando os dados de clima.
+![Dashboard com a previsão da próxima semana](docs/img/dashboard.png)
 
-## Motivação
+## Resultado
 
-Entre 2015 e 2026, o pior momento da dengue em Teresina foi em abril de 2022, com 1.581 casos numa única semana. A ideia é prever essa subida com algumas semanas de antecedência e, no fim, publicar um dashboard com o histórico e a previsão.
+Testei o modelo ano a ano, de 2019 a 2026: cada ano é previsto por um modelo treinado só com os anos anteriores. A comparação é com o baseline, que diz que a semana que vem vai ter os mesmos casos desta.
+
+| modelo | MAE | RMSE |
+|---|---|---|
+| baseline (semana anterior) | 27,9 | 62,7 |
+| **regressão linear** (casos das 4 últimas semanas + época do ano) | **26,8** | **59,8** |
+
+Erro em casos por semana, nas 391 semanas de teste.
+
+- O ganho é pequeno (4,2% no MAE) e fica nos surtos: em 2022 o modelo errou 73,0 casos por semana, contra 83,9 do baseline, e em 2026, 54,9 contra 61,9. Nos anos calmos (2020, 2021 e 2025) ele perde.
+- O clima (chuva acumulada e umidade) não melhorou a previsão de uma semana: o que ele traz já está nos casos recentes e na época do ano.
+- Também testei o alvo em log e um Gradient Boosting. Os dois ficaram piores que a regressão linear, que ainda tem a vantagem de dar pra explicar cada peso.
+
+O dashboard tem duas abas: a previsão da próxima semana, com uma faixa de 80%, e a avaliação, com o erro de cada ano e todos os modelos testados.
 
 ## Dados
 
@@ -16,27 +29,25 @@ Entre 2015 e 2026, o pior momento da dengue em Teresina foi em abril de 2022, co
 
 O InfoDengue também tem dados de clima, mas só a partir de junho de 2023 e sem chuva.
 
-## Decisões até aqui
+## Decisões
 
-- **Horizonte:** uma semana à frente no começo; depois, até quatro.
+- **Horizonte:** uma semana à frente. Depois, a ideia é chegar a quatro.
 - **Alvo:** `casos_est`, a estimativa do InfoDengue que corrige o atraso das notificações.
-- **Semanas em aberto:** as 20 mais recentes ficam fora do treino e da avaliação, porque os números delas ainda mudam.
+- **Semanas em aberto:** as 20 mais recentes ficam fora do treino e da avaliação, porque os números delas ainda mudam. Comparando dois downloads, semanas com até 11 semanas de idade subiram de 23% a 87%, e só a partir de 16 semanas o número parou de mudar.
 - **Sem indicadores do InfoDengue:** `Rt` e nível de alerta são calculados a partir dos próprios casos e dariam ao modelo uma dica da resposta.
-- **Clima do ERA5 no período todo:** a ideia inicial era usar a estação A312 e completar os buracos com o ERA5. Comparando as duas, a chuva mudava de relação ano a ano (em 2015 o ERA5 marcou 85% a mais que a estação; em 2022, 32% a menos), e emendar criaria degraus falsos no clima. A A312 ficou como referência para conferir o ERA5.
-- **Dado bruto congelado:** cópia fixa em `data/raw/`, para os resultados serem reproduzíveis.
+- **Clima do ERA5 no período todo:** a estação A312 ficou parada por cerca de 18 meses, e a relação de chuva entre as duas fontes muda de ano para ano (em 2015 o ERA5 marcou 85% a mais que a estação; em 2022, 32% a menos). Emendar as duas criaria degraus falsos no clima.
+- **Avaliação em janela móvel anual:** com um corte único entre treino e teste, o surto de 2022 ficaria sempre no treino. Assim, 2022 e 2026 viram anos de teste.
+- **Uma coisa por vez:** cada modelo acrescenta uma só mudança em relação ao anterior, sempre nas mesmas semanas, pra saber exatamente o que fez o erro mudar.
 
 O porquê de cada uma, e o que eu conferi nos dados antes de decidir, está em [docs/decisoes.md](docs/decisoes.md).
 
-## Estrutura
+## Limitações
 
-```
-data/raw/          dados brutos, sem alteração
-data/processed/    dados tratados pelos notebooks
-docs/              decisões e conferências
-notebooks/         01_coleta, 02_limpeza, 03_clima
-src/               funções reaproveitáveis
-models/            modelos treinados
-```
+- **O erro real deve ser maior que o medido.** Na avaliação, as semanas anteriores aparecem com o número já revisado, que não existia na hora da previsão. Como as semanas recentes chegam a subir até 87% depois, o modelo e o baseline parecem melhores do que seriam no uso real. Pra medir isso, passei a guardar uma foto de cada download em `data/raw/infodengue_fotos/`.
+- **A previsão do dashboard tende a sair baixa,** porque usa as 4 últimas semanas, que ainda estão sendo notificadas.
+- **O ganho sobre o baseline é pequeno** e não acontece em todos os anos.
+- **O clima vem de uma grade de ~25 km**, que suaviza a chuva localizada.
+- **O dashboard usa uma cópia fixa dos dados**, não a API ao vivo.
 
 ## Como rodar
 
@@ -48,23 +59,36 @@ python -m venv .venv
 .venv\Scripts\Activate.ps1        # no Linux/macOS: source .venv/bin/activate
 
 pip install -r requirements.txt
-jupyter notebook
+
+streamlit run app/app.py          # dashboard
+jupyter notebook                  # notebooks
 ```
 
-Os notebooks rodam em ordem. Os dados já estão no repositório; os ZIPs completos do INMET (cerca de 100 MB por ano) ficam de fora, só o CSV da estação de Teresina é versionado.
+Os dados e o modelo treinado já estão no repositório, então o dashboard abre direto. Os notebooks rodam em ordem; os ZIPs completos do INMET (cerca de 100 MB por ano) ficam de fora, só o CSV da estação de Teresina é versionado.
+
+## Estrutura
+
+```
+data/raw/          dados brutos, sem alteração (e uma foto de cada download do InfoDengue)
+data/processed/    dados tratados pelos notebooks
+notebooks/         01_coleta, 02_limpeza, 03_clima, 04_eda, 05_baseline, 06_modelos
+src/               features e regras de avaliação, usadas pelos notebooks e pelo dashboard
+models/            modelo final, ficha do modelo e resultados da avaliação
+app/               dashboard em Streamlit
+docs/              decisões e conferências
+```
 
 ## Próximos passos
 
-- Juntar o clima semanal com os casos
-- Análise exploratória: sazonalidade e quanto tempo a chuva leva para aparecer nos casos
-- Baseline ("a semana que vem é igual a esta") e primeiros modelos, avaliados no tempo
-- Dashboard em Streamlit
+- Prever de 1 a 4 semanas à frente, com um modelo para cada horizonte
+- Refazer a avaliação com as fotos dos downloads, usando os números que existiam em cada semana
+- Publicar o dashboard no Streamlit Community Cloud
 
 ## Sobre o uso de IA
 
-O planejamento é meu: defini o problema, o horizonte, o alvo, a regra das semanas em aberto e o roteiro das etapas. Usei o Claude Code como copiloto dentro desse plano. Ele escreveu boa parte do código e, em cada passo, levantava os riscos e as alternativas de implementação; eu escolhia o caminho, rodava e conferia os números antes de seguir. As decisões, os textos dos notebooks e deste README e os commits são meus.
+O planejamento é meu: defini o problema, o horizonte, o alvo, a regra das semanas em aberto e o roteiro das etapas. Usei o Claude Code como copiloto dentro desse plano. Ele escreveu boa parte do código e rascunhou parte dos textos dos notebooks e da documentação, e em cada passo levantava os riscos e as alternativas. Eu escolhia o caminho, rodava, conferia os números e revisava os textos antes de seguir. As decisões e os commits são meus.
 
-Na prática, foi conferindo o dado que algumas decisões mudaram: as semanas em aberto passaram de 10 para 20 depois de comparar dois downloads da API, o ERA5 entrou no projeto depois de medir, ano a ano, que a estação do INMET tinha ficado parada por um ano e meio, e virou a fonte principal do clima depois de comparar as duas fontes semana a semana.
+Na prática, foi conferindo o dado que algumas decisões mudaram: as semanas em aberto passaram de 10 para 20 depois de comparar dois downloads da API, o ERA5 virou a fonte do clima depois de medir que a estação do INMET tinha ficado parada por um ano e meio, e a limitação da avaliação ganhou número depois de ver semanas subindo até 87% entre um download e outro.
 
 ## Créditos dos dados
 

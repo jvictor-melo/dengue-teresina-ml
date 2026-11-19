@@ -109,10 +109,15 @@ with aba_previsao:
         "atualizações. Como a previsão usa essas semanas, ela tende a sair um pouco abaixo do que vai acontecer."
     )
 
-    # Gráfico: últimas 26 semanas, a previsão no fim e o ano típico ao fundo
-    recentes = dados.tail(26)
+    # Gráfico: últimas 12 semanas, a previsão no fim e o ano típico ao fundo
+    # 12 e não mais: depois de um pico grande, o eixo ia até centenas de casos e a previsão sumia no canto de baixo
+    recentes = dados.tail(12)
     recentes_fechadas = recentes[~recentes["semana_aberta"]]
     recentes_abertas = recentes[recentes["semana_aberta"]]
+
+    # A linha tracejada começa na última semana fechada, pra as duas linhas se encostarem
+    if len(recentes_fechadas) > 0:
+        recentes_abertas = pd.concat([recentes_fechadas.tail(1), recentes_abertas])
 
     datas_tipico = pd.concat([recentes["data_iniSE"], linha_proxima["data_iniSE"]])
     semanas_tipico = pd.concat([recentes["SE"], linha_proxima["SE"]]) % 100
@@ -120,7 +125,9 @@ with aba_previsao:
 
     fig, eixo = plt.subplots(figsize=(11, 4))
     eixo.plot(datas_tipico, valores_tipico, color="gray", linestyle=":", label="ano típico (mediana 2015–2026)")
-    eixo.plot(recentes_fechadas["data_iniSE"], recentes_fechadas["casos_est"], color="black", marker="o", markersize=3, label="casos (fechados)")
+    # Com 20 semanas abertas, as 12 últimas costumam ser todas abertas: aí não tem linha cheia pra desenhar
+    if len(recentes_fechadas) > 0:
+        eixo.plot(recentes_fechadas["data_iniSE"], recentes_fechadas["casos_est"], color="black", marker="o", markersize=3, label="casos (fechados)")
     eixo.plot(recentes_abertas["data_iniSE"], recentes_abertas["casos_est"], color="black", linestyle="--", marker="o", markersize=3, label="casos (ainda mudam)")
 
     # errorbar desenha o ponto da previsão com a faixa (a distância até a ponta de baixo e até a de cima)
