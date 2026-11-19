@@ -38,7 +38,7 @@ def criar_features(dados):
 def semana_epidemiologica(data_inicio):
     # Recebe o domingo que abre a semana e devolve a SE no formato AAAASS (ex.: 202642)
     # A semana pertence ao ano da sua quarta-feira (assim a semana de 29/12/2024 já é a 1 de 2025)
-    # Conferido nos dados: bate com a SE do InfoDengue nas 615 semanas, inclusive nos anos com semana 53
+    # Conferido nos dados: bate com a SE do InfoDengue nas 619 semanas, inclusive nos anos com semana 53
     quarta = data_inicio + pd.Timedelta(days=3)
     numero = (quarta.dayofyear - 1) // 7 + 1
     return quarta.year * 100 + numero

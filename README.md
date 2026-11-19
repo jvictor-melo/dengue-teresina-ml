@@ -10,8 +10,8 @@ Entre 2015 e 2026, o pior momento da dengue em Teresina foi em abril de 2022, co
 
 ## Dados
 
-- **[InfoDengue](https://info.dengue.mat.br/services/api)**: casos semanais de Teresina, de janeiro de 2015 a outubro de 2026, pela API pública.
-- **[ERA5 via Open-Meteo](https://open-meteo.com/en/docs/historical-weather-api)**: chuva, temperatura e umidade de hora em hora, de 2015 a outubro de 2026. É o clima usado no modelo.
+- **[InfoDengue](https://info.dengue.mat.br/services/api)**: casos semanais de Teresina, de janeiro de 2015 a novembro de 2026, pela API pública.
+- **[ERA5 via Open-Meteo](https://open-meteo.com/en/docs/historical-weather-api)**: chuva, temperatura e umidade de hora em hora, de 2015 a novembro de 2026. É o clima usado no modelo.
 - **[INMET](https://portal.inmet.gov.br/dadoshistoricos)**: as mesmas três variáveis, medidas pela estação automática de Teresina (A312), de 2015 a setembro de 2026. Usada para conferir o ERA5.
 
 O InfoDengue também tem dados de clima, mas só a partir de junho de 2023 e sem chuva.

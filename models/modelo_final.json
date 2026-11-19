@@ -9,30 +9,30 @@
     "semana_seno",
     "semana_cosseno"
   ],
-  "intercepto": 7.966709917137635,
+  "intercepto": 9.082433464834367,
   "pesos": {
-    "casos_lag1": 1.2372726698479874,
-    "casos_lag2": -0.3549151882329361,
-    "casos_lag3": 0.11210700854680555,
-    "casos_lag4": -0.059511000347626714,
-    "semana_seno": 13.02477839520277,
-    "semana_cosseno": 4.0091602395798285
+    "casos_lag1": 1.2240859841762142,
+    "casos_lag2": -0.3322961175981729,
+    "casos_lag3": 0.09205431507412395,
+    "casos_lag4": -0.06354206688257599,
+    "semana_seno": 14.16758509628351,
+    "semana_cosseno": 3.5817671467643364
   },
   "treino": {
     "primeira_semana": "2015-02-01",
-    "ultima_semana": "2026-05-24",
-    "semanas": 591
+    "ultima_semana": "2026-06-21",
+    "semanas": 595
   },
   "avaliacao_janela_movel_2019_2026": {
-    "MAE_modelo": 25.695011087806755,
-    "RMSE_modelo": 58.2287029509765,
-    "MAE_baseline": 26.614987080103358,
-    "RMSE_baseline": 60.29603969665649
+    "MAE_modelo": 26.76065044104686,
+    "RMSE_modelo": 59.82636055062254,
+    "MAE_baseline": 27.946291560102303,
+    "RMSE_baseline": 62.6858158513663
   },
   "faixa_80": {
-    "quantil_10_log": -0.618361144827716,
-    "quantil_90_log": 0.4559318574503409,
-    "cobertura_janela_movel": 0.7984496124031008
+    "quantil_10_log": -0.6158607586358325,
+    "quantil_90_log": 0.4417704391895576,
+    "cobertura_janela_movel": 0.7979539641943734
   },
   "versao_scikit_learn": "1.9.1"
 }

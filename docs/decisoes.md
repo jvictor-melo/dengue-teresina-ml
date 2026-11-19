@@ -10,7 +10,7 @@ Registro do porquê de cada escolha do projeto e do que eu conferi nos dados ant
 
 ## Casos (InfoDengue)
 
-**Semanas em aberto: 20.** O InfoDengue só corrige as 10 semanas mais recentes (`casos_est` maior que `casos`). Mas comparei o download com dados até 04/10/2026 com o download com dados até 11/10/2026, e os números mudaram nas 20 semanas mais recentes, inclusive em semanas que o InfoDengue já tratava como fechadas: a de 28/06/2026 foi de 292 para 335 casos. Essas 20 semanas ficam marcadas na coluna `semana_aberta`, fora do treino e da avaliação, mas continuam como entrada na previsão. É uma comparação só; se outro download mostrar revisão além de 20 semanas, o número muda.
+**Semanas em aberto: 20.** O InfoDengue só corrige as 10 semanas mais recentes (`casos_est` maior que `casos`). Mas comparei o download com dados até 04/10/2026 com o download com dados até 11/10/2026, e os números mudaram nas 20 semanas mais recentes, inclusive em semanas que o InfoDengue já tratava como fechadas: a de 28/06/2026 foi de 292 para 335 casos. Essas 20 semanas ficam marcadas na coluna `semana_aberta`, fora do treino e da avaliação, mas continuam como entrada na previsão. Uma segunda comparação, com o download de 18/11/2026, confirmou a margem: semanas com até 11 semanas de idade subiram de 23% a 87% (a de 16/08/2026 foi de 63 para 118), as de 12 a 15 semanas subiram de 1% a 6%, e a partir de 16 semanas a mudança foi de no máximo 2 casos. Nas 10 semanas que o InfoDengue ainda estava corrigindo, a estimativa dele somava 533 casos, e no download seguinte já eram 736 (38% a mais).
 
 **Colunas que ficaram de fora.** Fiquei só com `data_iniSE`, `SE`, `casos` e `casos_est`. Indicadores como o `Rt` e o nível de alerta são calculados pelo InfoDengue a partir dos próprios casos e recalculados por versões mais novas do modelo deles. Usar isso como entrada seria dar ao modelo uma dica da resposta. O clima do InfoDengue também saiu, porque só existe a partir de junho de 2023 e não tem chuva.
 
@@ -31,6 +31,8 @@ Registro do porquê de cada escolha do projeto e do que eu conferi nos dados ant
 ## Dados brutos
 
 **Dado bruto congelado.** A API do InfoDengue revisa os números com o tempo, então guardo uma cópia em `data/raw/` e não mexo mais nela. Tudo o que é tratado vai para `data/processed/`, sempre gerado pelos notebooks.
+
+**Uma foto de cada download.** Como a API revisa as semanas recentes, cada download é uma versão diferente do dado, e o arquivo principal só guarda a última. Por isso o `01_coleta` salva uma cópia de cada download em `data/raw/infodengue_fotos/`, com o nome pela última semana do arquivo (`infodengue_ate_2026-11-08.csv`). As duas versões de antes disso (dados até 04/10 e 11/10/2026) foram recuperadas do histórico do Git. Hoje o backtest usa os valores já revisados, que não existiam na hora da previsão; com fotos suficientes, dá pra refazer a avaliação com os números de cada momento e medir o erro real.
 
 **ZIPs do INMET fora do Git.** Cada ZIP anual tem cerca de 100 MB, com as ~500 estações do Brasil. Só o CSV da A312 de cada ano é extraído por código, sem alteração, e versionado (~9 MB no total). Assim o repositório roda sem baixar nada.
 

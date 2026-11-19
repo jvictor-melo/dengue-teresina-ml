@@ -200,8 +200,9 @@ with aba_avaliacao:
     st.subheader("Limitações")
     st.markdown(
         "- As semanas mais recentes ainda são provisórias: a previsão da próxima semana usa números que vão mudar.\n"
-        "- No teste, a semana anterior já aparece com o número revisado, que não existia na hora. Isso deixa modelo "
-        "e baseline um pouco otimistas, igual pros dois.\n"
+        "- No teste, as semanas anteriores aparecem com o número já revisado, que não existia na hora. Como as "
+        "semanas recentes chegam a subir até 87% nas atualizações seguintes, o erro no uso real deve ser maior que "
+        "o mostrado aqui, pro modelo e pro baseline.\n"
         "- O ganho sobre o baseline é pequeno e não acontece em todos os anos.\n"
         "- O clima vem do ERA5 (grade de ~25 km), que suaviza a chuva localizada.\n"
         "- O painel usa uma cópia fixa dos dados, não a API ao vivo."
