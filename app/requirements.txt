@@ -1,0 +1,10 @@
+# Dependências só do dashboard (usado pelo deploy no Streamlit Community Cloud)
+# O Community Cloud procura primeiro nesta pasta, então os notebooks não entram no deploy
+# Versões fixas: as mesmas da .venv onde o app e o modelo foram testados
+streamlit==1.65.0
+pandas==3.0.6
+numpy==2.5.3
+matplotlib==3.11.2
+joblib==1.6.0
+# O modelo salvo em models/modelo_final.joblib foi treinado nesta versão: outra pode não abrir o arquivo
+scikit-learn==1.9.1
