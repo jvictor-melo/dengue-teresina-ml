@@ -2,7 +2,9 @@
 
 Modelo que prevê os casos de dengue da semana seguinte em Teresina (PI), com dados públicos do InfoDengue e clima do ERA5, e um dashboard em Streamlit com a previsão e a avaliação do modelo.
 
-![Dashboard com a previsão da próxima semana](docs/img/dashboard.png)
+**Dashboard no ar: [dengue-teresina.streamlit.app](https://dengue-teresina.streamlit.app/)**
+
+[![Dashboard com a previsão da próxima semana](docs/img/dashboard.png)](https://dengue-teresina.streamlit.app/)
 
 ## Resultado
 
@@ -51,6 +53,8 @@ O porquê de cada uma, e o que eu conferi nos dados antes de decidir, está em [
 
 ## Como rodar
 
+O dashboard está publicado no [Streamlit Community Cloud](https://dengue-teresina.streamlit.app/). Para rodar na sua máquina:
+
 ```bash
 git clone https://github.com/jvictor-melo/dengue-teresina-ml.git
 cd dengue-teresina-ml
@@ -82,7 +86,6 @@ docs/              decisões e conferências
 
 - Prever de 1 a 4 semanas à frente, com um modelo para cada horizonte
 - Refazer a avaliação com as fotos dos downloads, usando os números que existiam em cada semana
-- Publicar o dashboard no Streamlit Community Cloud
 
 ## Sobre o uso de IA
 
