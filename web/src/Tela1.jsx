@@ -10,6 +10,13 @@ function mesDaSemana(semana) {
   return meses[indice]
 }
 
+// Desce até a previsão sem pôr "#previsao" no link: assim quem copia o endereço
+// e manda pra alguém compartilha o site desde a tela 1, não direto o número
+function descerProPrevisao(evento) {
+  evento.preventDefault() // impede o comportamento padrão do link (que mudaria o endereço)
+  document.getElementById('previsao').scrollIntoView()
+}
+
 export default function Tela1({ dados }) {
   const c = dados.contexto
 
@@ -32,7 +39,7 @@ export default function Tela1({ dados }) {
             dengue. Alguns anos são calmos; outros viram surto.
           </p>
           <div className="acoes">
-            <a className="botao botao-cheio" href="#previsao">
+            <a className="botao botao-cheio" href="#previsao" onClick={descerProPrevisao}>
               Ver a previsão da semana <IconeDescer />
             </a>
             <a className="botao botao-contorno" href={LINK_STREAMLIT} target="_blank" rel="noopener">

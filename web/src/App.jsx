@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react'
 import Tela1 from './Tela1.jsx'
 import Tela2 from './Tela2.jsx'
 
+// O navegador lembra a rolagem no F5; aqui desligamos isso pra página sempre abrir na tela 1
+// (quem abre um link com #previsao de propósito ainda vai direto pra lá, pelo efeito lá embaixo)
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual'
+}
+
 export default function App() {
   // Os três estados possíveis: carregando, deu erro, ou com os dados
   const [dados, setDados] = useState(null)
@@ -22,7 +28,7 @@ export default function App() {
   // Link direto pra #previsao: a seção só existe depois que o JSON chega, então rola nessa hora
   useEffect(() => {
     if (dados && window.location.hash) {
-      document.querySelector(window.location.hash)?.scrollIntoView()
+      document.querySelector(window.location.hash)?.scrollIntoView({ behavior: 'instant' }) // pulo direto, sem rolagem suave
     }
   }, [dados])
 
