@@ -15,3 +15,14 @@ export function dataBR(iso, formato = 'longo') {
   }
   return `${dia} de ${MESES[mes - 1]}`
 }
+
+// Semana inteira, do domingo ao sábado: "15 a 21 de novembro"
+// Se a semana vira o mês, mostra os dois: "29 de novembro a 5 de dezembro"
+export function semanaBR(inicioIso, fimIso) {
+  const [, mesInicio, diaInicio] = inicioIso.split('-').map(Number)
+  const [, mesFim] = fimIso.split('-').map(Number)
+  if (mesInicio === mesFim) {
+    return `${diaInicio} a ${dataBR(fimIso)}`
+  }
+  return `${dataBR(inicioIso)} a ${dataBR(fimIso)}`
+}

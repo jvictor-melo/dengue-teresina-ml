@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { dataBR, numeroBR } from './formato.js'
+import { dataBR, numeroBR, semanaBR } from './formato.js'
 import Grafico from './Grafico.jsx'
 import useNaTela from './useNaTela.js'
 
@@ -73,7 +73,8 @@ export default function Tela2({ dados }) {
       <div className={`previsao ${naTela || semMovimento ? 'desenhando' : ''} ${terminou ? 'pronta' : ''}`}>
         <div className="previsao-numero">
           <p className={`selo selo-${p.status}`}>{SELOS[p.status]}</p>
-          <h2 id="titulo-previsao" className="semana">Próxima semana, {dataBR(p.semana)}</h2>
+          {/* A semana vem dos dados, não do dia de hoje: "próxima semana" ficaria errado quando os dados envelhecem */}
+          <h2 id="titulo-previsao" className="semana">Semana de {semanaBR(p.semana, p.semana_fim)}</h2>
 
           {/* aria-hidden no número que conta; o leitor de tela recebe só o valor final, logo abaixo */}
           <p className="casos" aria-hidden="true" ref={ref}>{numeroBR(mostrado)}</p>
@@ -98,7 +99,7 @@ export default function Tela2({ dados }) {
           <strong>Pra evitar o mosquito:</strong> não deixe água parada em vasos, pneus e caixas d'água.
         </p>
         <p className={`aviso ${estaVelha ? 'aviso-velha' : ''}`}>
-          Previsão de um modelo estatístico, não é dado oficial. Dados do InfoDengue até {dataBR(dados.dados_ate)},
+          Previsão de um modelo estatístico, não é dado oficial. Dados do InfoDengue até a semana de {semanaBR(dados.dados_ate, dados.dados_ate_fim)},
           atualizado em {dataBR(dados.atualizado_em)}
           {estaVelha ? `, há ${diasParado} dias. Pode haver números mais recentes.` : '.'}
         </p>

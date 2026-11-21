@@ -69,14 +69,18 @@ faixa_alta = resultado["faixa_max"]
 faixa = info_modelo["faixa_80"]
 
 ultima_semana = dados["data_iniSE"].max()
+ultima_semana_fim = ultima_semana + pd.Timedelta(days=6)
 proxima_semana = resultado["semana"]
+proxima_semana_fim = resultado["semana_fim"]
 casos_ultima_semana = dados["casos_est"].iloc[-1]
 
 # Ano típico: a mediana de casos de cada semana do ano, só nas semanas fechadas (igual na EDA)
 medianas = mediana_por_semana(dados)
 
 st.title("Previsão semanal de dengue em Teresina")
-st.caption(f"Dados do InfoDengue e do ERA5 até a semana de {ultima_semana:%d/%m/%Y}.")
+# Datas da semana inteira (domingo a sábado), tiradas dos dados e não do dia de hoje:
+# como os dados são uma cópia fixa, "esta semana" ficaria errado com o tempo
+st.caption(f"Dados do InfoDengue e do ERA5 até a semana de {ultima_semana:%d/%m} a {ultima_semana_fim:%d/%m/%Y}.")
 
 aba_previsao, aba_avaliacao = st.tabs(["Previsão", "Como o modelo foi avaliado"])
 
@@ -85,7 +89,7 @@ with aba_previsao:
 
     # delta_color="inverse": subir casos aparece em vermelho, cair aparece em verde
     coluna_previsao.metric(
-        f"Previsão para a semana de {proxima_semana:%d/%m/%Y}",
+        f"Previsão para a semana de {proxima_semana:%d/%m} a {proxima_semana_fim:%d/%m/%Y}",
         f"{previsao:.0f} casos",
         delta=f"{previsao - casos_ultima_semana:+.0f} em relação à semana anterior",
         delta_color="inverse",

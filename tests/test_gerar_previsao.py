@@ -27,12 +27,14 @@ def test_json_formato():
     dados, modelo, info = carregar_dados_e_modelo()
     saida = montar_json(dados, modelo, info, hoje=date(2026, 11, 20))
 
-    assert set(saida.keys()) == {"atualizado_em", "dados_ate", "previsao", "recentes", "contexto"}
+    assert set(saida.keys()) == {"atualizado_em", "dados_ate", "dados_ate_fim", "previsao", "recentes", "contexto"}
     assert saida["atualizado_em"] == "2026-11-20"
     assert saida["dados_ate"] == "2026-11-08"
+    assert saida["dados_ate_fim"] == "2026-11-14"
 
     previsao = saida["previsao"]
     assert previsao["semana"] == "2026-11-15"
+    assert previsao["semana_fim"] == "2026-11-21"
     assert previsao["casos"] == 19
     assert previsao["faixa_min"] == 10
     assert previsao["faixa_max"] == 29

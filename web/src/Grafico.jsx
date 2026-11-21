@@ -55,9 +55,9 @@ export default function Grafico({ recentes, previsao }) {
         <text className="g-rotulo" x={MARGEM.esquerda - 10} y={chao + 4} textAnchor="end">0</text>
         <text className="g-rotulo" x={MARGEM.esquerda - 10} y={MARGEM.topo + 4} textAnchor="end">{numeroBR(topo)}</text>
 
-        {/* "Hoje": a última semana com dado */}
+        {/* A última semana com dado (não o dia de hoje: os dados são uma cópia fixa e envelhecem) */}
         <line className="g-hoje" x1={ultimo.x} x2={ultimo.x} y1={MARGEM.topo} y2={chao} />
-        <text className="g-rotulo" x={ultimo.x - 6} y={MARGEM.topo + 4} textAnchor="end">hoje</text>
+        <text className="g-rotulo" x={ultimo.x - 6} y={MARGEM.topo + 4} textAnchor="end">último dado</text>
 
         <g clipPath="url(#cortina)">
           {/* Faixa da previsão: um leque da última semana até a semana prevista */}

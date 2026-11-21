@@ -71,8 +71,11 @@ def montar_json(dados, modelo, info, hoje):
     return {
         "atualizado_em": hoje.isoformat(),
         "dados_ate": dados["data_iniSE"].max().strftime("%Y-%m-%d"),
+        # Sábado da última semana de dados: o site mostra a semana inteira ("8 a 14 de novembro")
+        "dados_ate_fim": (dados["data_iniSE"].max() + pd.Timedelta(days=6)).strftime("%Y-%m-%d"),
         "previsao": {
             "semana": resultado["semana"].strftime("%Y-%m-%d"),
+            "semana_fim": resultado["semana_fim"].strftime("%Y-%m-%d"),
             # O site mostra inteiros: arredonda aqui, uma vez só
             "casos": int(round(resultado["casos"])),
             "faixa_min": int(round(resultado["faixa_min"])),

@@ -53,6 +53,8 @@ def prever_proxima_semana(dados, modelo, info):
 
     return {
         "semana": semana,
+        # A semana vai de domingo a sábado: o sábado é o domingo + 6 dias
+        "semana_fim": semana + pd.Timedelta(days=6),
         "SE": se,
         "casos": casos,
         "faixa_min": float(faixa_min[0]),
