@@ -10,7 +10,6 @@ from pathlib import Path
 
 import joblib
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import streamlit as st
 
@@ -19,8 +18,8 @@ RAIZ = Path(__file__).resolve().parent.parent
 
 # Deixa o Python achar a pasta src/ (mesmo truque do sys.path.append("..") nos notebooks)
 sys.path.append(str(RAIZ))
-from src.avaliacao import ANOS_TESTE, aplicar_faixa, erros_por_ano
-from src.features import FEATURES_MODELO, adicionar_proxima_semana, criar_features
+from src.avaliacao import ANOS_TESTE, erros_por_ano
+from src.previsao import mediana_por_semana, prever_proxima_semana, semanas_recentes
 
 CAMINHO_DADOS = RAIZ / "data" / "processed" / "dengue_clima_semanal.csv"
 CAMINHO_MODELO = RAIZ / "models" / "modelo_final.joblib"
@@ -62,24 +61,19 @@ modelo, info_modelo = carregar_modelo()
 backtest, ablacao = carregar_avaliacao()
 
 # --- Previsão da próxima semana ---
-# Acrescenta a semana seguinte à última conhecida e calcula as features com a mesma função do treino
-com_proxima = criar_features(adicionar_proxima_semana(dados))
-linha_proxima = com_proxima.iloc[[-1]]
-previsao = modelo.predict(linha_proxima[FEATURES_MODELO])[0]
-
-# Faixa de 80%, com os quantis do erro da janela móvel guardados na ficha do modelo
+# A conta fica em src/previsao.py, a mesma usada pelo script do site (assim os dois mostram o mesmo número)
+resultado = prever_proxima_semana(dados, modelo, info_modelo)
+previsao = resultado["casos"]
+faixa_baixa = resultado["faixa_min"]
+faixa_alta = resultado["faixa_max"]
 faixa = info_modelo["faixa_80"]
-faixa_baixa, faixa_alta = aplicar_faixa(np.array([previsao]), faixa["quantil_10_log"], faixa["quantil_90_log"])
-faixa_baixa = faixa_baixa[0]
-faixa_alta = faixa_alta[0]
 
 ultima_semana = dados["data_iniSE"].max()
-proxima_semana = linha_proxima["data_iniSE"].iloc[0]
+proxima_semana = resultado["semana"]
 casos_ultima_semana = dados["casos_est"].iloc[-1]
 
 # Ano típico: a mediana de casos de cada semana do ano, só nas semanas fechadas (igual na EDA)
-fechadas = dados[~dados["semana_aberta"]]
-mediana_por_semana = fechadas.groupby(fechadas["SE"] % 100)["casos_est"].median()
+medianas = mediana_por_semana(dados)
 
 st.title("Previsão semanal de dengue em Teresina")
 st.caption(f"Dados do InfoDengue e do ERA5 até a semana de {ultima_semana:%d/%m/%Y}.")
@@ -111,7 +105,7 @@ with aba_previsao:
 
     # Gráfico: últimas 12 semanas, a previsão no fim e o ano típico ao fundo
     # 12 e não mais: depois de um pico grande, o eixo ia até centenas de casos e a previsão sumia no canto de baixo
-    recentes = dados.tail(12)
+    recentes = semanas_recentes(dados)
     recentes_fechadas = recentes[~recentes["semana_aberta"]]
     recentes_abertas = recentes[recentes["semana_aberta"]]
 
@@ -119,9 +113,9 @@ with aba_previsao:
     if len(recentes_fechadas) > 0:
         recentes_abertas = pd.concat([recentes_fechadas.tail(1), recentes_abertas])
 
-    datas_tipico = pd.concat([recentes["data_iniSE"], linha_proxima["data_iniSE"]])
-    semanas_tipico = pd.concat([recentes["SE"], linha_proxima["SE"]]) % 100
-    valores_tipico = semanas_tipico.map(mediana_por_semana)
+    datas_tipico = pd.concat([recentes["data_iniSE"], pd.Series([proxima_semana])])
+    semanas_tipico = pd.concat([recentes["SE"], pd.Series([resultado["SE"]])]) % 100
+    valores_tipico = semanas_tipico.map(medianas)
 
     fig, eixo = plt.subplots(figsize=(11, 4))
     eixo.plot(datas_tipico, valores_tipico, color="gray", linestyle=":", label="ano típico (mediana 2015–2026)")
