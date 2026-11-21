@@ -228,3 +228,6 @@ CLAUDE.md
 # ZIPs anuais do INMET (~90 MB cada, todas as estacoes do Brasil)
 # So o CSV da estacao A312 e extraido e commitado, em data/raw/inmet/a312/
 data/raw/inmet/*.zip
+
+# Config local do preview do Claude
+.claude/
