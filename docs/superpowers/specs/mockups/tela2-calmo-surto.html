@@ -1,0 +1,59 @@
+<h2>Tela 2 com as correções: semana calma × semana de surto</h2>
+<p class="subtitle">Esquerda: dados reais de hoje. Direita: <b>exemplo inventado</b> de abril, só pra testar o pior caso. Sem moldura e sem arcos, selo na paleta, aviso maior.</p>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
+<style>
+.wrapS{display:grid;gap:20px}@media(min-width:900px){.wrapS{grid-template-columns:1fr 1fr}}
+.cd{background:#141414;border:1px solid #2a2a2a;border-radius:14px;padding:26px;color:#f2efe6;font-family:Manrope,sans-serif;display:flex;flex-direction:column;gap:10px}
+.chip{align-self:flex-start;border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600}
+.c-abaixo{border:1px solid #f2efe6;color:#f2efe6}.c-normal{border:1px solid #f5c518;color:#f5c518}.c-acima{background:#f5c518;color:#111}
+.sm{margin:0;font-size:14px;color:#cfcac0}.big b{color:#f2efe6}.mut{display:block;font-size:12.5px;color:#a9a399;margin-top:3px}
+.num{font-family:'Instrument Serif',serif;font-size:clamp(96px,14vw,150px);line-height:.8;color:#f5c518}
+.ref{margin:0;font-size:15px;color:#cfcac0}.ref b{color:#f2efe6}
+.ch{width:100%;height:auto}.ax{fill:#a9a399;font:11px Manrope}.base{stroke:#333}.hoje{stroke:#555;stroke-dasharray:2 3}
+.ln{fill:none;stroke:#f2efe6;stroke-width:2}.fx{fill:rgba(245,197,24,.28)}.pv{stroke:#f5c518;stroke-width:2;stroke-dasharray:4 3}.dot{fill:#f5c518}
+.leg{margin:0;font-size:12.5px;color:#a9a399;display:flex;align-items:center;gap:8px}.dash{width:22px;border-top:2px dashed #f2efe6}
+.fazer{margin:6px 0 0;font-size:14px;color:#f2efe6;border-left:2px solid #f5c518;padding-left:10px}
+.aviso{margin:0;font-size:13px;color:#b5afa5}
+</style>
+<div class="wrapS">
+<div class="cd">
+<span class="chip c-normal">● Normal pra época</span>
+<p class="sm">Próxima semana · 15 de novembro</p>
+<div class="num">19</div>
+<p class="sm big">casos previstos · provavelmente entre <b>10 e 29</b> <span class="mut">(em 8 de cada 10 semanas testadas, o real caiu nessa faixa)</span></p>
+<p class="ref">Normal pra época: <b>~14 casos</b></p>
+<svg viewBox="0 0 320 150" class="ch">
+<text x="0" y="14" class="ax">90</text><text x="0" y="129" class="ax">0</text>
+<line x1="30" x2="310" y1="126.0" y2="126.0" class="base"/>
+<line x1="286.7" x2="286.7" y1="10" y2="126.0" class="hoje"/><text x="284.7" y="18" class="ax" text-anchor="end">hoje</text>
+<polyline points="30.0,48.7 53.3,19.0 76.7,44.8 100.0,57.7 123.3,29.3 146.7,53.8 170.0,66.7 193.3,77.0 216.7,73.2 240.0,93.8 263.3,95.1 286.7,100.2" class="ln" stroke-dasharray="5 4"/>
+<path d="M286.7 100.2 L310.0 88.6 L310.0 113.1 Z" class="fx"/>
+<line x1="286.7" y1="100.2" x2="310.0" y2="101.5" class="pv"/>
+<circle cx="310.0" cy="101.5" r="4" class="dot"/>
+<text x="30" y="144" class="ax">23/ago</text><text x="310.0" y="144" class="ax" text-anchor="end">15/nov</text>
+</svg>
+<p class="leg"><span class="dash"></span> semanas ainda sendo atualizadas (os números costumam subir)</p>
+<p class="fazer">Pra evitar o mosquito: não deixe água parada em vasos, pneus e caixas d'água.</p>
+<p class="aviso">Previsão de um modelo estatístico, não é dado oficial. Dados do InfoDengue até 08/11/2026 · atualizado em 18/11/2026.</p>
+</div>
+<div class="cd">
+<span class="chip c-acima">● Acima do normal pra época</span>
+<p class="sm">Próxima semana · 19 de abril (exemplo)</p>
+<div class="num">800</div>
+<p class="sm big">casos previstos · provavelmente entre <b>432 e 1248</b> <span class="mut">(em 8 de cada 10 semanas testadas, o real caiu nessa faixa)</span></p>
+<p class="ref">Normal pra época: <b>~275 casos</b></p>
+<svg viewBox="0 0 320 150" class="ch">
+<text x="0" y="14" class="ax">1300</text><text x="0" y="129" class="ax">0</text>
+<line x1="30" x2="310" y1="126.0" y2="126.0" class="base"/>
+<line x1="286.7" x2="286.7" y1="10" y2="126.0" class="hoje"/><text x="284.7" y="18" class="ax" text-anchor="end">hoje</text>
+<polyline points="30.0,118.0 53.3,115.3 76.7,112.6 100.0,109.0 123.3,104.6 146.7,99.2 170.0,93.9 193.3,87.6 216.7,79.6 240.0,72.5 263.3,65.3 286.7,61.8" class="ln" stroke-dasharray="5 4"/>
+<path d="M286.7 61.8 L310.0 14.6 L310.0 87.5 Z" class="fx"/>
+<line x1="286.7" y1="61.8" x2="310.0" y2="54.6" class="pv"/>
+<circle cx="310.0" cy="54.6" r="4" class="dot"/>
+<text x="30" y="144" class="ax">25/jan</text><text x="310.0" y="144" class="ax" text-anchor="end">19/abr</text>
+</svg>
+<p class="leg"><span class="dash"></span> semanas ainda sendo atualizadas (os números costumam subir)</p>
+<p class="fazer">Pra evitar o mosquito: não deixe água parada em vasos, pneus e caixas d'água.</p>
+<p class="aviso">Previsão de um modelo estatístico, não é dado oficial. Dados do InfoDengue até 12/04 (exemplo) · atualizado em 18/11/2026.</p>
+</div>
+</div>

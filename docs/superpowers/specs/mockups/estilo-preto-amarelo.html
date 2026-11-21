@@ -1,0 +1,98 @@
+<h2>Preto e amarelo, mesma estrutura</h2>
+<p class="subtitle">Mantive tudo da "Multidisciplinary" (moldura, cartão, título serifado com foto, pílulas) e só troquei as cores. Duas versões:</p>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.fr{background:var(--fr);border-radius:14px;padding:26px;position:relative;overflow:hidden}
+.fr:before,.fr:after{content:"";position:absolute;left:50%;transform:translateX(-50%);border:1px solid var(--arc);border-radius:50%}
+.fr:before{width:140%;height:140%;top:-20%}
+.fr:after{width:110%;height:110%;top:-5%}
+.cd{position:relative;z-index:1;background:var(--cd);border-radius:14px;padding:22px 26px 32px;color:var(--ac);font-family:Manrope,sans-serif;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;min-height:430px}
+.nav{display:flex;gap:16px;align-items:center;background:var(--cd2);border:1px solid var(--ln);border-radius:999px;padding:5px 5px 5px 12px;font-size:12px;box-shadow:0 6px 20px rgba(38,56,208,.12)}
+.nav .lg{display:flex;align-items:center;gap:7px;font-family:'Instrument Serif',serif;font-size:17px;padding-right:12px;border-right:1px solid var(--ln)}
+.nav .lg i{width:20px;height:20px;border-radius:5px;background:var(--btn);color:var(--btnt);font-style:normal;font:700 11px Manrope;display:grid;place-items:center}
+.pl{border-radius:999px;padding:10px 18px;font-size:13px;font-weight:600}
+.pp{background:var(--btn);color:var(--btnt)}
+.po{border:1px solid var(--ac)}
+.sm{font-size:14px;margin:6px 0 0}
+h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:66px;line-height:.9;margin:0;letter-spacing:-.01em}
+h1 .ln2{display:inline-flex;align-items:center;gap:14px}
+.ph{display:inline-block;width:110px;height:62px;border-radius:12px;background:linear-gradient(135deg,#6b7280,#374151);box-shadow:0 6px 16px rgba(0,0,0,.2);position:relative;overflow:hidden}
+.ph span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:600 9px Manrope;opacity:.8;text-transform:uppercase;letter-spacing:.06em}
+.bd{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ln);border-radius:999px;padding:5px 12px;font-size:12px;background:var(--cd2)}
+.bd i{width:7px;height:7px;border-radius:50%;background:#22c55e}
+.st{display:grid;grid-template-columns:repeat(3,1fr);width:100%;border-top:1px solid var(--ln);padding-top:14px;margin-top:auto}
+.st div+div{border-left:1px solid var(--ln)}
+.st b{display:block;font-family:'Instrument Serif',serif;font-weight:400;font-size:34px;line-height:1}
+.st span{font-size:11px;opacity:.8}
+.num{font-family:'Instrument Serif',serif;font-size:150px;line-height:.8}
+svg{width:100%;height:90px}
+svg path{fill:none;stroke-width:2.5}
+.lbl{color:var(--lbl);font:600 11px Manrope;letter-spacing:.1em;text-transform:uppercase;margin:0 0 10px;position:relative;z-index:1}
+.wrap2{display:grid;gap:18px}
+@media(min-width:900px){.wrap2{grid-template-columns:1fr 1fr}}
+
+.cd{color:var(--tx)}
+.hl{background:var(--hl);color:var(--hlt);padding:0 .12em;border-radius:6px}
+.A{--fr:repeating-linear-gradient(45deg,#f5c518 0 26px,#111 26px 52px);--arc:transparent;--cd:#f7f4ec;--cd2:#fffdf6;--ln:#ddd6c3;--tx:#111;--ac:#111;--btn:#111;--btnt:#f5c518;--hl:#f5c518;--hlt:#111;--lbl:#111}
+.A .lbl{background:#f5c518;display:inline-block;padding:3px 8px;border-radius:4px}
+.B{--fr:radial-gradient(120% 90% at 50% 120%,#3a3000,#0b0b0b 60%);--arc:rgba(245,197,24,.18);--cd:#151515;--cd2:#1d1d1d;--ln:#333;--tx:#f2efe6;--ac:#f5c518;--btn:#f5c518;--btnt:#111;--hl:#f5c518;--hlt:#111;--lbl:#f5c518}
+.B .po{border-color:#f5c518;color:#f5c518}
+.B .num{color:#f5c518}
+.A .num{color:#111}
+</style>
+<h3 style="margin-top:18px">A · Claro com listras: cartão creme, texto preto, moldura com listras do mosquito</h3>
+<div class="wrap2">
+  <div class="fr A">
+    <p class="lbl">Tela 1</p>
+    <div class="cd">
+      <div class="nav"><span class="lg"><i>D</i>Dengue Teresina</span><span>Previsão</span><span>Os dados</span><span class="pl pp" style="padding:7px 14px;font-size:12px">Ver previsão</span></div>
+      <p class="sm">Todo ano, entre março e maio.</p>
+      <h1>A temporada<br><span class="ln2"><span class="ph"><span>foto</span></span>da <span class="hl w">dengue</span></span></h1>
+      <p class="sm" style="max-width:44ch">62% dos casos de Teresina chegam nesses três meses. Alguns anos são calmos; outros viram surto.</p>
+      <div style="display:flex;gap:10px"><span class="pl pp">Ver a previsão da semana ↓</span><span class="pl po">Como funciona</span></div>
+      <div class="st"><div><b>62%</b><span>entre mar e mai</span></div><div><b>16.170</b><span>casos em 2022</span></div><div><b>9.263</b><span>em 2026 até jun</span></div></div>
+    </div>
+  </div>
+
+  <div class="fr A">
+    <p class="lbl">Tela 2</p>
+    <div class="cd">
+      <span class="bd"><i></i>Semana tranquila</span>
+      <p class="sm">Próxima semana · 15 de novembro</p>
+      <div class="num">19</div>
+      <p class="sm">casos previstos · provavelmente entre <b>10 e 29</b></p>
+      <svg viewBox="0 0 300 90" preserveAspectRatio="none"><path d="M255 52 L295 45 L295 82 L255 70Z" style="fill:rgba(245,197,24,.45)"/><path stroke="var(--ac)" d="M0 86 C40 84 60 66 90 24 S140 38 170 62 S230 70 255 61"/><path stroke="var(--ac)" stroke-dasharray="4 4" d="M255 61 L295 63"/></svg>
+      <p style="font-size:11px;opacity:.75;margin:0">Previsão de um modelo estatístico, não é dado oficial. As últimas semanas ainda estão sendo atualizadas.</p>
+    </div>
+  </div>
+</div>
+
+
+<h3 style="margin-top:28px">B · Escuro: cartão preto, texto creme, amarelo como destaque</h3>
+<div class="wrap2">
+  <div class="fr B">
+    <p class="lbl">Tela 1</p>
+    <div class="cd">
+      <div class="nav"><span class="lg"><i>D</i>Dengue Teresina</span><span>Previsão</span><span>Os dados</span><span class="pl pp" style="padding:7px 14px;font-size:12px">Ver previsão</span></div>
+      <p class="sm">Todo ano, entre março e maio.</p>
+      <h1>A temporada<br><span class="ln2"><span class="ph"><span>foto</span></span>da <span class="hl w">dengue</span></span></h1>
+      <p class="sm" style="max-width:44ch">62% dos casos de Teresina chegam nesses três meses. Alguns anos são calmos; outros viram surto.</p>
+      <div style="display:flex;gap:10px"><span class="pl pp">Ver a previsão da semana ↓</span><span class="pl po">Como funciona</span></div>
+      <div class="st"><div><b>62%</b><span>entre mar e mai</span></div><div><b>16.170</b><span>casos em 2022</span></div><div><b>9.263</b><span>em 2026 até jun</span></div></div>
+    </div>
+  </div>
+
+  <div class="fr B">
+    <p class="lbl">Tela 2</p>
+    <div class="cd">
+      <span class="bd"><i></i>Semana tranquila</span>
+      <p class="sm">Próxima semana · 15 de novembro</p>
+      <div class="num">19</div>
+      <p class="sm">casos previstos · provavelmente entre <b>10 e 29</b></p>
+      <svg viewBox="0 0 300 90" preserveAspectRatio="none"><path d="M255 52 L295 45 L295 82 L255 70Z" style="fill:rgba(245,197,24,.45)"/><path stroke="var(--ac)" d="M0 86 C40 84 60 66 90 24 S140 38 170 62 S230 70 255 61"/><path stroke="var(--ac)" stroke-dasharray="4 4" d="M255 61 L295 63"/></svg>
+      <p style="font-size:11px;opacity:.75;margin:0">Previsão de um modelo estatístico, não é dado oficial. As últimas semanas ainda estão sendo atualizadas.</p>
+    </div>
+  </div>
+</div>
+
+
