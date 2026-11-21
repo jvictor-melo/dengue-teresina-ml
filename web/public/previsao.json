@@ -1,0 +1,83 @@
+{
+  "atualizado_em": "2026-11-20",
+  "dados_ate": "2026-11-08",
+  "previsao": {
+    "semana": "2026-11-15",
+    "casos": 19,
+    "faixa_min": 10,
+    "faixa_max": 29,
+    "mediana_epoca": 14,
+    "status": "normal",
+    "cobertura": 0.798
+  },
+  "recentes": [
+    {
+      "semana": "2026-08-23",
+      "casos": 60,
+      "aberta": true
+    },
+    {
+      "semana": "2026-08-30",
+      "casos": 83,
+      "aberta": true
+    },
+    {
+      "semana": "2026-09-06",
+      "casos": 63,
+      "aberta": true
+    },
+    {
+      "semana": "2026-09-13",
+      "casos": 53,
+      "aberta": true
+    },
+    {
+      "semana": "2026-09-20",
+      "casos": 75,
+      "aberta": true
+    },
+    {
+      "semana": "2026-09-27",
+      "casos": 56,
+      "aberta": true
+    },
+    {
+      "semana": "2026-10-04",
+      "casos": 46,
+      "aberta": true
+    },
+    {
+      "semana": "2026-10-11",
+      "casos": 38,
+      "aberta": true
+    },
+    {
+      "semana": "2026-10-18",
+      "casos": 41,
+      "aberta": true
+    },
+    {
+      "semana": "2026-10-25",
+      "casos": 25,
+      "aberta": true
+    },
+    {
+      "semana": "2026-11-01",
+      "casos": 24,
+      "aberta": true
+    },
+    {
+      "semana": "2026-11-08",
+      "casos": 20,
+      "aberta": true
+    }
+  ],
+  "contexto": {
+    "pct_mar_mai": 62.5,
+    "casos_2022": 16170,
+    "ano_atual": 2026,
+    "casos_ano_atual_fechados": 9263,
+    "ultima_semana_fechada": "2026-06-21",
+    "semana_pico_tipico": 15
+  }
+}

@@ -1,0 +1,185 @@
+/* Cores e fontes do site, num lugar só (as "variáveis globais" do CSS) */
+:root {
+  --noite: #11100e;        /* fundo da página */
+  --cartao: #1a1916;       /* superfícies um pouco acima do fundo */
+  --linha: #2e2c27;        /* divisórias */
+  --creme: #f2ede1;        /* texto principal */
+  --creme-suave: #bdb6a6;  /* texto secundário (contraste ~9:1 no fundo) */
+  --amarelo: #f5c518;      /* só nos destaques */
+  --amarelo-escuro: #d9ad0b;
+
+  --serifa: "Instrument Serif", Georgia, serif;
+  --texto: "Manrope", system-ui, sans-serif;
+
+  --margem: clamp(20px, 5vw, 64px);
+  --facil: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: dark;
+  scrollbar-color: var(--linha) var(--noite);
+  caret-color: var(--amarelo);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--noite);
+  color: var(--creme);
+  font-family: var(--texto);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--amarelo); color: var(--noite); }
+
+a { color: inherit; text-underline-offset: 0.2em; }
+
+:focus-visible { outline: 2px solid var(--amarelo); outline-offset: 3px; border-radius: 4px; }
+
+.pagina { max-width: 1240px; margin: 0 auto; padding: 0 var(--margem); }
+
+/* Botões em pílula: o cheio é a ação principal, o de contorno é a secundária */
+.botao {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 48px; padding: 0 22px; border-radius: 999px;
+  font: 600 0.9375rem var(--texto); text-decoration: none; cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.3s var(--facil);
+}
+.botao:hover { transform: translateY(-1px); }
+.botao-cheio { background: var(--amarelo); color: var(--noite); border: 0; }
+.botao-cheio:hover { background: var(--amarelo-escuro); }
+.botao-contorno { background: transparent; color: var(--creme); border: 1px solid var(--linha); }
+.botao-contorno:hover { border-color: var(--creme-suave); }
+.icone { width: 14px; height: 14px; flex: none; }
+
+/* ---------- Tela 1 ---------- */
+/* overflow-x: clip corta o mosquito que passa da borda, sem criar rolagem pro lado */
+.tela1 { min-height: 100svh; display: flex; flex-direction: column; overflow-x: clip; }
+
+.topo { display: flex; justify-content: space-between; align-items: center; height: 76px; }
+.marca { font-family: var(--serifa); font-size: 1.5rem; text-decoration: none; }
+.link-topo { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; font-size: 0.9375rem; text-decoration: none; color: var(--creme-suave); }
+.link-topo:hover { color: var(--creme); }
+
+.abertura {
+  flex: 1; display: grid; gap: 40px; align-items: center;
+  padding: clamp(24px, 6vh, 72px) 0;
+}
+@media (min-width: 900px) { .abertura { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); } }
+
+.titulo {
+  font-family: var(--serifa); font-weight: 400;
+  font-size: clamp(3.25rem, 9vw, 6rem); line-height: 0.92; letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+/* Marca-texto amarelo na palavra "dengue" (pedido do design aprovado) */
+/* O fundo de um texto em linha ocupa a altura inteira da fonte, maior que a entrelinha apertada do título,
+   e cobria a perninha do "p" de "temporada". O gradiente pinta só a faixa do meio, como marca-texto de verdade */
+.marca-texto {
+  color: var(--noite); padding: 0 0.1em; box-decoration-break: clone;
+  background: linear-gradient(transparent 24%, var(--amarelo) 24%, var(--amarelo) 92%, transparent 92%);
+}
+
+.contexto { margin-top: 28px; max-width: 38ch; font-size: clamp(1.0625rem, 1.6vw, 1.25rem); color: var(--creme-suave); }
+.contexto strong { color: var(--creme); font-weight: 600; }
+
+.acoes { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Foto do mosquito: recortada e em cinza; no computador fica à direita e "sangra" pra fora da coluna */
+.mosquito { display: block; width: 100%; height: auto; }
+@media (min-width: 900px) { .mosquito { width: 125%; max-width: none; margin-left: -10%; } }
+/* No celular vai pra cima do título, menor */
+@media (max-width: 899px) { .mosquito { order: -1; width: 78%; margin: 0 0 -8px auto; } }
+
+.numeros {
+  display: grid; gap: 24px; padding: 28px 0 40px; border-top: 1px solid var(--linha);
+}
+@media (min-width: 700px) { .numeros { grid-template-columns: repeat(3, 1fr); } }
+/* No HTML a legenda vem antes (dt/dd), mas na tela o número aparece em cima */
+.numeros > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+.numero-valor { display: block; font-family: var(--serifa); font-size: clamp(2.25rem, 4vw, 3rem); line-height: 1; font-variant-numeric: tabular-nums; }
+.numero-legenda { display: block; margin-top: 8px; max-width: 26ch; font-size: 0.9375rem; color: var(--creme-suave); }
+
+/* ---------- Tela 2: a previsão ---------- */
+.tela2 {
+  min-height: 100svh; padding: clamp(56px, 10vh, 112px) var(--margem);
+  display: flex; flex-direction: column; justify-content: center; gap: 48px;
+  border-top: 1px solid var(--linha);
+}
+
+.previsao { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 900px) { .previsao { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 64px; } }
+
+/* Selo de status: o texto sempre diz o estado, a cor só reforça */
+.selo {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px; font-size: 0.875rem; font-weight: 600;
+}
+.selo::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.selo-abaixo { border: 1px solid var(--creme-suave); color: var(--creme); }
+.selo-normal { border: 1px solid var(--amarelo); color: var(--amarelo); }
+.selo-acima { background: var(--amarelo); color: var(--noite); }
+
+.semana { margin-top: 20px; font: 500 1.0625rem var(--texto); color: var(--creme-suave); }
+
+.casos {
+  font-family: var(--serifa); color: var(--amarelo);
+  font-size: clamp(6rem, 18vw, 11rem); line-height: 0.85; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; margin: 12px 0 20px;
+}
+
+.faixa { font-size: 1.125rem; color: var(--creme-suave); max-width: 34ch; }
+.faixa strong, .referencia strong { color: var(--creme); font-weight: 600; white-space: nowrap; }
+.faixa-explica { display: block; margin-top: 6px; font-size: 0.875rem; }
+.referencia { margin-top: 16px; font-size: 1.125rem; color: var(--creme-suave); }
+
+/* Gráfico (cores do SVG vêm daqui, pra trocar de tema num lugar só) */
+.grafico > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.g-base { stroke: var(--linha); }
+.g-hoje { stroke: var(--creme-suave); stroke-dasharray: 2 4; opacity: 0.6; }
+.g-rotulo { fill: var(--creme-suave); font: 500 13px var(--texto); font-variant-numeric: tabular-nums; }
+.g-rotulo-forte { fill: var(--amarelo); font-weight: 700; }
+/* O SVG encolhe no celular, então o texto dele precisa ser maior em "unidades do desenho" pra ficar legível */
+@media (max-width: 600px) { .g-rotulo { font-size: 24px; } }
+.g-linha { fill: none; stroke: var(--creme); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.g-linha-aberta { stroke-dasharray: 7 6; }
+.g-faixa { fill: var(--amarelo); opacity: 0.28; }
+.g-previsao { stroke: var(--amarelo); stroke-width: 2.5; stroke-dasharray: 5 5; }
+.g-ponto { fill: var(--amarelo); stroke: var(--noite); stroke-width: 3; }
+.g-legenda { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: 0.875rem; color: var(--creme-suave); }
+.g-amostra { width: 24px; height: 4px; flex: none; }
+.g-amostra line { stroke: var(--creme); stroke-width: 2.5; stroke-dasharray: 5 4; }
+
+/* A cortina começa fechada e abre da esquerda pra direita quando a tela aparece */
+.cortina { transform: scaleX(0); transform-origin: 0 0; transition: transform 1.4s var(--facil); }
+.desenhando .cortina { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .cortina { transform: none; transition: none; } }
+
+.rodape-previsao { display: grid; gap: 14px; padding-top: 28px; border-top: 1px solid var(--linha); }
+@media (min-width: 900px) { .rodape-previsao { grid-template-columns: 1fr 1fr; gap: 64px; } }
+.fazer { font-size: 1rem; max-width: 52ch; }
+.aviso { font-size: 0.875rem; color: var(--creme-suave); max-width: 60ch; }
+.aviso-velha { color: var(--amarelo); }
+
+/* Faixa, referência e gráfico entram depois da contagem do número */
+.revela { opacity: 0; transform: translateY(8px); transition: opacity 0.7s var(--facil), transform 0.7s var(--facil); }
+.pronta .revela { opacity: 1; transform: none; }
+.pronta .referencia { transition-delay: 0.12s; }
+@media (prefers-reduced-motion: reduce) { .revela { opacity: 1; transform: none; transition: none; } }
+
+/* Texto só pro leitor de tela */
+.so-leitor { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Rodapé com as fontes e o crédito da foto */
+.rodape {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px;
+  padding-top: 24px; padding-bottom: 32px; border-top: 1px solid var(--linha);
+  font-size: 0.875rem; color: var(--creme-suave);
+}
+.rodape a:hover { color: var(--creme); }
+
+/* Estados de carregando e de erro */
+.aviso-carga { min-height: 100svh; display: grid; place-items: center; text-align: center; padding: var(--margem); color: var(--creme-suave); }
